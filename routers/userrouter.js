@@ -1,7 +1,7 @@
 import express from 'express'
 import multer from 'multer'
 import path from 'path'
-import { deleteuser, insertuser, loginuser, updateuser } from '../controls/usercontroller.js'
+import { deleteuser, insertuser, loginuser, updateuser } from '../controller/usercontroller.js'
 
 export const userrouter = express.Router()
 

@@ -2,9 +2,9 @@ import express from 'express'
 export const adminrouter = express.Router()
 import multer from 'multer'
 import path from 'path'
-import {  adminlogin } from '../controls/admincontroller.js'
-import { addcategory, deletecategory, updatecategory } from '../controls/categorycontroller.js'
-import { addproduct } from '../controls/productcontroller.js'
+import {  adminlogin } from '../controller/admincontroller.js'
+import { addcategory, deletecategory, updatecategory } from '../controller/categorycontroller.js'
+import { addproduct } from '../controller/productcontroller.js'
 
 
 
