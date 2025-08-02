@@ -4,7 +4,7 @@ import multer from 'multer'
 import path from 'path'
 import {  adminlogin } from '../controller/admincontroller.js'
 import { addcategory, deletecategory, updatecategory } from '../controller/categorycontroller.js'
-import { addproduct } from '../controller/productcontroller.js'
+import { addproduct, deleteproduct, updateproduct } from '../controller/productcontroller.js'
 
 
 
@@ -30,6 +30,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 adminrouter.post("/addproduct", upload.single("productimage"),addproduct)
+adminrouter.put("/updateproduct/:id",upload.single('productimage'),updateproduct)
+adminrouter.delete("/deleteproduct/:id",deleteproduct)
 
 
 

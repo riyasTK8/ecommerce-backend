@@ -6,9 +6,8 @@ import MongoStore from 'connect-mongo';
 import session from 'express-session'
 import { userrouter } from './routers/userrouter.js';
 import { adminrouter } from './routers/adminrouter.js';
-import { productrouter } from './routers/productrouter.js';
-import { categoryrouter } from './routers/categoryrouter.js';
-import { cartrouter } from './routers/cartrouter.js';
+
+
 
 dotenv.config();
  
@@ -30,9 +29,8 @@ app.use(express.json())
 app.use(bodyParser.json());
 app.use("/user",userrouter)
 app.use("/admin",adminrouter)
-app.use("/product",productrouter)
-app.use("/category",categoryrouter)
-app.use("/cart",cartrouter)
+
+
 
 
 mongoose.connect(process.env.DBURL)

@@ -2,6 +2,8 @@ import express from 'express'
 import multer from 'multer'
 import path from 'path'
 import { deleteuser, insertuser, loginuser, updateuser } from '../controller/usercontroller.js'
+import { addcart } from '../controller/cartcontroller.js'
+
 
 export const userrouter = express.Router()
 
@@ -22,3 +24,6 @@ userrouter.post("/signup", upload.single("image"), insertuser)
 userrouter.post("/login",loginuser)
 userrouter.put('/update/:id',updateuser)
 userrouter.delete('/delete/:id',deleteuser)
+userrouter.post("/addcart",addcart)
+
+
