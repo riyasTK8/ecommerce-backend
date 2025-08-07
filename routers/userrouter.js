@@ -1,29 +1,47 @@
-import express from 'express'
-import multer from 'multer'
-import path from 'path'
-import { deleteuser, insertuser, loginuser, updateuser } from '../controller/usercontroller.js'
-import { addcart } from '../controller/cartcontroller.js'
+import express from 'express';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import {
+  deleteuser,
+  insertuser,
+  loginuser,
+  updateuser
+} from '../controller/usercontroller.js';
 
+import {
+  addTocart,
+  showTotalAmount,
+  editCart,
+  deleteCartItem
+} from '../controller/cartcontroller.js';
 
-export const userrouter = express.Router()
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export const userrouter = express.Router();
+
 
 const storage = multer.diskStorage({
-    destination: function (req, file, call) {
-        call(null, "uploads")
-    },
-    filename: (req, file, call) => {
-        const name = Date.now() + path.extname(file.originalname)
-        call(null, name)
-    }
-})
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'uploads'));
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName);
+  }
+});
 
-const upload = multer({ storage: storage })
-
-
-userrouter.post("/signup", upload.single("image"), insertuser)
-userrouter.post("/login",loginuser)
-userrouter.put('/update/:id',updateuser)
-userrouter.delete('/delete/:id',deleteuser)
-userrouter.post("/addcart",addcart)
+const upload = multer({ storage });
 
 
+userrouter.post('/signup', upload.single('image'), insertuser);
+userrouter.post('/login', loginuser);
+userrouter.put('/update/:id', updateuser);
+userrouter.delete('/delete/:id', deleteuser);
+
+
+userrouter.post('/addcart/:id', addTocart); 
+userrouter.get('/showcart', showTotalAmount);
+userrouter.put('/updatecart/:id', editCart);
+userrouter.delete('/deletecart/:id', deleteCartItem);

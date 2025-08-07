@@ -11,17 +11,14 @@ export const insertuser = async (req, res) => {
 
     const {  email, password } = req.body;
 
-    // if ( !email || !password || !image) {
-    //   return res.status(400).json({ error: "required" });
-    // }
-
+   
     const hashedPass = await bcrypt.hash(password, 10);
 
     const user = new usermodel({
       
       email:email,
       password: hashedPass,
-      // image: pro,
+    
     });
 
     await user.save();
