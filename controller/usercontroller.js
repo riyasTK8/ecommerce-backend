@@ -93,4 +93,18 @@ catch{
   res.json({message:"your account not deactivated"})
 }
 }
-    
+
+
+export const logout = (req,res)=>{
+  req.session.user = null
+  if(req.session.user==null){
+    res.json({message:"user logout successfully"})
+  }
+
+  else{
+    res.json({message:"user not logout"})
+  }
+}
+
+
+
