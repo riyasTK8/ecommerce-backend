@@ -48,3 +48,36 @@ export const createorder = async(req,res)=>{
     res.json({message:"order placed successfully"})
 
 }
+
+export const findorders = async (req, res) => {
+    try {
+        const userId = req.session.user.id;
+        const orders = await orderModel.find({ userId });
+        res.json({ orders });
+    } catch (error) {
+        res.json({ message: "no orders" });
+    }
+};
+
+
+export const updateorder = async (req, res) => {
+    
+    
+    try {
+        
+        const { orderStatus } = req.body;
+console.log(orderStatus);
+        const updatedOrder = await orderModel.findByIdAndUpdate(
+            req.params.id,
+            { deliveryStatus: orderStatus }
+        );
+
+        if (!updatedOrder) {
+            return res.json({ message: "Order not found" });
+        }
+
+        res.json({ message: "Order status updated", updatedOrder });
+    } catch  {
+        res.json({ message: "order status not updated" });
+    }
+}

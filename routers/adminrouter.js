@@ -5,6 +5,7 @@ import path from 'path'
 import {  adminlogin } from '../controller/admincontroller.js'
 import { addcategory, deletecategory, updatecategory } from '../controller/categorycontroller.js'
 import { addproduct, deleteproduct, updateproduct } from '../controller/productcontroller.js'
+import { updateorder } from '../controller/ordercontroller.js'
 
 
 
@@ -32,6 +33,9 @@ const upload = multer({ storage: storage })
 adminrouter.post("/addproduct", upload.single("productimage"),addproduct)
 adminrouter.put("/updateproduct/:id",upload.single('productimage'),updateproduct)
 adminrouter.delete("/deleteproduct/:id",deleteproduct)
+
+
+adminrouter.put('/updateorder/:id',updateorder)
 
 
 

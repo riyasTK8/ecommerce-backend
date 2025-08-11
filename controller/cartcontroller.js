@@ -20,7 +20,7 @@ export const addTocart = async (req, res) => {
         cart.items[existingItemIndex].quantity += quantity;
       } else {
         cart.items.push({ productId, quantity });
-      }
+      } 
 
       await cart.save();
       return res.json({ message: "Product added to cart" });
