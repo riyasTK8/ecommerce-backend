@@ -2,16 +2,19 @@ import express from 'express'
 export const adminrouter = express.Router()
 import multer from 'multer'
 import path from 'path'
-import {  adminlogin } from '../controller/admincontroller.js'
-import { addcategory, deletecategory, updatecategory } from '../controller/categorycontroller.js'
-import { addproduct, deleteproduct, updateproduct } from '../controller/productcontroller.js'
+import {  adminlogin, finduser } from '../controller/admincontroller.js'
+import { addcategory, deletecategory, showcategory, updatecategory } from '../controller/categorycontroller.js'
+import { addproduct, categoryname, deleteproduct, showproduct, singleproductfind, updateproduct } from '../controller/productcontroller.js'
 import { updateorder } from '../controller/ordercontroller.js'
+import { findallorders } from '../controller/ordercontroller.js'
+
 
 
 
 adminrouter.post("/login",adminlogin)
 adminrouter.post('/addcategory',addcategory)
 adminrouter.put('/updatecategory/:id',updatecategory)
+adminrouter.get("/showcategory",showcategory)
 adminrouter.delete('/deletecategory/:id',deletecategory)
 
 
@@ -33,10 +36,12 @@ const upload = multer({ storage: storage })
 adminrouter.post("/addproduct", upload.single("productimage"),addproduct)
 adminrouter.put("/updateproduct/:id",upload.single('productimage'),updateproduct)
 adminrouter.delete("/deleteproduct/:id",deleteproduct)
+adminrouter.get("/showproducts",showproduct)
+
+
 
 
 adminrouter.put('/updateorder/:id',updateorder)
-
-
-
-
+adminrouter.get("/finduser",finduser)
+adminrouter.get("/findallorders",findallorders)
+ adminrouter.get("/categoryname",categoryname)

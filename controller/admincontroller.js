@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
+import { usermodel } from '../models/usermodel.js'
 
 export const adminlogin = async (req, res) => {
     const { email, password } = req.body
@@ -31,5 +32,19 @@ export const adminlogin = async (req, res) => {
 
     req.session.admin = admindata._id
 
-    res.json({ message: "admin logged successfully" })
+    res.json({ message: "admin logged successfully",success:true })
+}
+
+
+export const finduser = async(req,res)=>{
+    try{
+        const userdata = await usermodel.find()
+        console.log(userdata);
+        res.json({message:userdata})
+        
+    }
+    catch(err){
+        console.log(err);
+        
+    }
 }

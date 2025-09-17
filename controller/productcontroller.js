@@ -59,6 +59,8 @@ export const updateproduct = async (req, res) => {
 
 export const deleteproduct = async (req, res) => {
     try {
+        console.log('reached delete pro');
+        
         const product_id = req.params.id
         const productdelete = await productmodel.findByIdAndDelete(product_id)
         res.json({ message: "product deleted successfully", productdelete })
@@ -70,4 +72,79 @@ export const deleteproduct = async (req, res) => {
         res.json({ message: "product not deleted" })
     }
 
+}
+
+export const showproduct = async (req,res)=>{
+    console.log("hii");
+    
+    
+    
+
+    try{
+        const productfind = await productmodel.find()
+        console.log(productfind);
+        
+        res.json({products:productfind})
+        
+    }
+    catch{
+        console.log("cant find products");
+        
+    }
+}
+
+export const singleproductfind = async(req,res)=>{
+    const productid = req.params.id
+    try{
+        const findsingle = await productmodel.findById(productid)
+        res.json({product:findsingle})
+    }
+    catch{
+        console.log("cant find single product");
+        
+    }
+}
+
+
+export const categoryname = async(req,res)=>{
+    try{
+        console.log("hyyyy");
+        
+
+        const namedata = await productmodel.aggregate([
+            {
+                $lookup:{
+                    from:"categories",
+                    localField:"productcategory",
+                    foreignField:"_id",
+                    as:"cnames"
+
+                },
+
+                
+            },
+            {
+                $unwind:"$cnames"
+
+
+            },
+            {
+                $project:{
+                    productname:1,
+                    productprice:1,
+                    productimage:1,
+                    productcategory:1,
+                    productdescription:1,
+                    category:"$cnames.categoryname"
+                }
+            }
+
+
+        ])
+        res.json({message:namedata})
+    }
+    catch{
+     console.log("not worked");
+     
+    }
 }

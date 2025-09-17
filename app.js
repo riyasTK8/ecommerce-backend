@@ -5,7 +5,10 @@ import bodyParser from 'body-parser';
 import MongoStore from 'connect-mongo';
 import session from 'express-session'
 import { userrouter } from './routers/userrouter.js';
+import { dymmyrouter } from './router.js';
 import { adminrouter } from './routers/adminrouter.js';
+import cors from 'cors'
+
 
 
 
@@ -17,15 +20,25 @@ app.use(session({
   secret: '1234567',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 60 * 60 * 1000 },
+  cookie: {
+    maxAge: 60 * 60 * 1000,
+    sameSite: 'lax',  
+    secure: false   
+  },
   store: MongoStore.create({
     mongoUrl: process.env.DBURL,
     collectionName: 'sessions'
   })
 }));
 
+app.use(express.static("uploads"))
 app.use(express.urlencoded())
 app.use(express.json())
+app.use(cors({
+  origin: 'http://localhost:5173',  
+  credentials: true
+}));
+
 app.use(bodyParser.json());
 app.use("/user",userrouter)
 app.use("/admin",adminrouter)
@@ -48,10 +61,6 @@ app.get('/', (req, res) => {
 app.listen(9000, () => {
     console.log('Server started on http://localhost:9000');  
 });
-
-
-
-
 
 
 

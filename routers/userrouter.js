@@ -17,6 +17,8 @@ import {
   deleteCartItem
 } from '../controller/cartcontroller.js';
 import { createorder, findorders, updateorder } from '../controller/ordercontroller.js';
+import { singleproductfind } from '../controller/productcontroller.js';
+import { findProductByCategory } from '../controller/categorycontroller.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -53,4 +55,6 @@ userrouter.delete('/deletecart/:id', deleteCartItem);
 
 userrouter.post("/createorder",createorder)
 userrouter.get("/findorder",findorders)
+userrouter.get("/showsingleproduct/:id",singleproductfind)
 
+userrouter.get("/findproductbycategory/:id", findProductByCategory);

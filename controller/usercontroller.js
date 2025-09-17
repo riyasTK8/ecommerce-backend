@@ -9,20 +9,24 @@ export const insertuser = async (req, res) => {
       pro = req.file.filename;
     }
 
-    const {  email, password } = req.body;
+    const { name,phone,age,place, email, password } = req.body;
 
    
     const hashedPass = await bcrypt.hash(password, 10);
 
     const user = new usermodel({
       
+      name:name,
+      phone:phone,
+      age:age,
+      place:place,
       email:email,
       password: hashedPass,
     
     });
 
     await user.save();
-    res.json({ message: "User registered successfully" });
+    res.json({ message: "User registered successfully",success:true });
   } catch (err) {
     
     res.status(500).json({ message: "server error" });
@@ -48,7 +52,7 @@ export const loginuser = async(req,res)=>{
         id:finduser._id,
         email:finduser.email
     }
-    res.json({message:"user logged successfully"})
+    res.json({message:"user logged successfully",success:true})
   
     console.log(req.session.user);
     
@@ -105,6 +109,4 @@ export const logout = (req,res)=>{
     res.json({message:"user not logout"})
   }
 }
-
-
 

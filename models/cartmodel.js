@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
+
 const cartSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Types.ObjectId,
     required: true,
   },
-
   items: [
     {
       productId: {
@@ -13,13 +13,14 @@ const cartSchema = new mongoose.Schema({
       },
       quantity: {
         type: Number,
-        default:1,
+        default: 1,
       },
     },
   ],
-  Total: {
+  total: {  
     type: Number,
     required: false,
+    default: 0,
   },
 });
 
