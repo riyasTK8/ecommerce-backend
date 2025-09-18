@@ -2,22 +2,23 @@ import express from 'express'
 export const adminrouter = express.Router()
 import multer from 'multer'
 import path from 'path'
-import {  adminlogin, finduser } from '../controller/admincontroller.js'
+import {  adminLogin, finduser } from '../controller/admincontroller.js'
 import { addcategory, deletecategory, showcategory, updatecategory } from '../controller/categorycontroller.js'
 import { addproduct, categoryname, deleteproduct, showproduct, singleproductfind, updateproduct } from '../controller/productcontroller.js'
 import { updateorder } from '../controller/ordercontroller.js'
 import { findallorders } from '../controller/ordercontroller.js'
+import { toggleUserStatus } from '../controller/usercontroller.js'
 
 
 
 
-adminrouter.post("/login",adminlogin)
+adminrouter.post("/login",adminLogin)
 adminrouter.post('/addcategory',addcategory)
 adminrouter.put('/updatecategory/:id',updatecategory)
 adminrouter.get("/showcategory",showcategory)
 adminrouter.delete('/deletecategory/:id',deletecategory)
 
-
+adminrouter.patch('/toggle-status/:id', toggleUserStatus);
 
 
 export const userrouter = express.Router()

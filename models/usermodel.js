@@ -33,7 +33,11 @@ const userSchema = new mongoose.Schema({
     },
     image:{
         type:String
-    }
+    },
+     isActive: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 export const usermodel = mongoose.model('users',userSchema)

@@ -34,31 +34,38 @@ export const insertuser = async (req, res) => {
 };
 
 
-export const loginuser = async(req,res)=>{
-   
-    const{email,password} = req.body
-    const finduser = await usermodel.findOne({email})
-    console.log(finduser);
-    if(!finduser)
-{
-    res.json({message:"user not found"})
-}
-     
-    const passwordmatch = await bcrypt.compare(password,finduser.password)
-    if(!passwordmatch){
-        return res.json({message:"check your password"})
-    }
-      req.session.user={
-        id:finduser._id,
-        email:finduser.email
-    }
-    res.json({message:"user logged successfully",success:true})
-  
-    console.log(req.session.user);
-    
-    
-}
+export const userLogin = async (req, res) => {
+  const { email, password } = req.body;
 
+  try {
+    const user = await usermodel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (!user.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: "Your account has been deactivated by the admin.",
+      });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ success: false, message: "Invalid password" });
+    }
+
+
+    req.session.user = user._id;
+    res.json({ success: true, message: "Login successful", user });
+
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
 export const updateuser = async(req,res)=>{
   try{
     const  user_id = req.params.id;
@@ -85,6 +92,28 @@ export const updateuser = async(req,res)=>{
     res.json({message:"user not found"})
   }
 }
+
+export const toggleUserStatus = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const user = await usermodel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.isActive = !user.isActive;
+    await user.save();
+
+    res.json({
+      message: `User status updated to ${user.isActive ? "Active" : "Deactive"}`,
+      isActive: user.isActive,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
 
 
 export const deleteuser = async(req,res)=>{
