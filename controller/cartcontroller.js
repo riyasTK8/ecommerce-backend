@@ -89,13 +89,13 @@ export const showTotalAmount = async (req, res) => {
             $push: {
               productId: "$items.productId",
               quantity: "$items.quantity",
-              name: "$Details.productname",     // Product name
-              image: "$Details.productimage",   // Product image
-              price: { $ifNull: ["$Details.productprice", 0] },  // Price per product
-              subtotal: "$subtotal",            // Calculated subtotal
+              name: "$Details.productname",    
+              image: "$Details.productimage",  
+              price: { $ifNull: ["$Details.productprice", 0] },  
+              subtotal: "$subtotal",            
             },
           },
-          total: { $sum: "$subtotal" },          // Sum of all subtotals
+          total: { $sum: "$subtotal" },          
         },
       },
     ]);

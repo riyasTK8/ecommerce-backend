@@ -12,13 +12,13 @@ import { toggleUserStatus } from '../controller/usercontroller.js'
 
 
 
+
 adminrouter.post("/login",adminLogin)
 adminrouter.post('/addcategory',addcategory)
 adminrouter.put('/updatecategory/:id',updatecategory)
 adminrouter.get("/showcategory",showcategory)
 adminrouter.delete('/deletecategory/:id',deletecategory)
 
-adminrouter.patch('/toggle-status/:id', toggleUserStatus);
 
 
 export const userrouter = express.Router()
@@ -46,3 +46,5 @@ adminrouter.put('/updateorder/:id',updateorder)
 adminrouter.get("/finduser",finduser)
 adminrouter.get("/findallorders",findallorders)
  adminrouter.get("/categoryname",categoryname)
+
+adminrouter.patch("/toggle-status/:id", toggleUserStatus);

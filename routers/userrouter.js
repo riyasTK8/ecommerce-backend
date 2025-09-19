@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import {
   deleteuser,
   insertuser,
-  userLogin,
+  loginuser,
   logout,
   updateuser
 } from '../controller/usercontroller.js';
@@ -40,7 +40,7 @@ const upload = multer({ storage });
 
 
 userrouter.post('/signup', upload.single('image'), insertuser);
-userrouter.post('/login', userLogin);
+userrouter.post('/login', loginuser);
 userrouter.put('/update/:id', updateuser);
 userrouter.delete('/delete/:id', deleteuser);
 userrouter.post('/logout',logout)

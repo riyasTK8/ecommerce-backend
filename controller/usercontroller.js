@@ -2,70 +2,62 @@ import { usermodel } from "../models/usermodel.js";
 import bcrypt from 'bcrypt'
 
 
+
 export const insertuser = async (req, res) => {
   try {
-    let pro = "";
-    if (req.file) {
-      pro = req.file.filename;
-    }
-
-    const { name,phone,age,place, email, password } = req.body;
-
-   
+    const { name, phone, age, place, email, password } = req.body;
     const hashedPass = await bcrypt.hash(password, 10);
 
     const user = new usermodel({
-      
-      name:name,
-      phone:phone,
-      age:age,
-      place:place,
-      email:email,
+      name,
+      phone,
+      age,
+      place,
+      email,
       password: hashedPass,
-    
     });
 
     await user.save();
-    res.json({ message: "User registered successfully",success:true });
+    res.json({ message: "User registered successfully", success: true });
   } catch (err) {
-    
-    res.status(500).json({ message: "server error" });
+    res.status(500).json({ message: "Server error" });
   }
 };
 
-
-export const userLogin = async (req, res) => {
+export const loginuser = async (req, res) => {
   const { email, password } = req.body;
 
+  const finduser = await usermodel.findOne({ email });
+  if (!finduser) return res.json({ success: false, message: "User illa" });
+
+  if (!finduser.active)
+    return res.json({ success: false, message: "admine contact aakk" });
+
+  const passwordmatch = await bcrypt.compare(password, finduser.password);
+  if (!passwordmatch) return res.json({ success: false, message: "Incorrect password" });
+
+  req.session.user = { id: finduser._id, email: finduser.email };
+  return res.json({ success: true, message: "User logged in successfully" });
+};
+
+export const toggleUserStatus = async (req, res) => {
   try {
-    const user = await usermodel.findOne({ email });
+    const { id } = req.params;
+    const user = await usermodel.findById(id);
+    if (!user) return res.json({ success: false, message: "User not found" });
 
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-
-    if (!user.isActive) {
-      return res.status(403).json({
-        success: false,
-        message: "Your account has been deactivated by the admin.",
-      });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ success: false, message: "Invalid password" });
-    }
-
-
-    req.session.user = user._id;
-    res.json({ success: true, message: "Login successful", user });
-
+    user.active = !user.active;
+    await user.save();
+    res.json({ success: true, active: user.active, message: "Status updated" });
+    
   } catch (err) {
-    console.error("Login error:", err);
-    res.status(500).json({ success: false, message: "Server error" });
+    res.json({ success: false, message: "Server error" });
   }
 };
+
+
+
+
 export const updateuser = async(req,res)=>{
   try{
     const  user_id = req.params.id;
@@ -92,28 +84,6 @@ export const updateuser = async(req,res)=>{
     res.json({message:"user not found"})
   }
 }
-
-export const toggleUserStatus = async (req, res) => {
-  try {
-    const userId = req.params.id;
-
-    const user = await usermodel.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    user.isActive = !user.isActive;
-    await user.save();
-
-    res.json({
-      message: `User status updated to ${user.isActive ? "Active" : "Deactive"}`,
-      isActive: user.isActive,
-    });
-  } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
-};
-
 
 
 export const deleteuser = async(req,res)=>{
