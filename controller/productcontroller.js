@@ -148,3 +148,17 @@ export const categoryname = async(req,res)=>{
      
     }
 }
+
+export const searchproducts = async(req,res)=>{
+
+    try{
+        const regex = new RegExp(req.params.query,"i")
+        const products = await productmodel.find({productname:regex})
+        res.json(products)
+    }
+    catch{
+       console.log("cant serch poroducts");
+       
+    }
+
+}
