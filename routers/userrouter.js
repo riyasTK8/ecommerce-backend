@@ -19,6 +19,7 @@ import {
 import { createorder, findorders, updateorder } from '../controller/ordercontroller.js';
 import { searchproducts, singleproductfind } from '../controller/productcontroller.js';
 import { findProductByCategory } from '../controller/categorycontroller.js';
+import { showproduct } from '../controller/productcontroller.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,3 +61,4 @@ userrouter.get("/showsingleproduct/:id",singleproductfind)
 userrouter.get("/findproductbycategory/:id", findProductByCategory);
 
 userrouter.get("/searchproduct/:query",searchproducts)
+userrouter.get("/showproduct",showproduct)
