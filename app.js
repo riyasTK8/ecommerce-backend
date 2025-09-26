@@ -35,13 +35,13 @@ app.use(express.static("uploads"))
 app.use(express.urlencoded())
 app.use(express.json())
 app.use(cors({
-  origin: 'http://13.51.206.203',  
+  origin: 'http://13.51.206.203:5173',  
   credentials: true
 }));
 
 app.use(bodyParser.json());
-app.use("/user",userrouter)
-app.use("/admin",adminrouter)
+app.use("/user",api/userrouter)
+app.use("/admin",api/adminrouter)
 
 
 
