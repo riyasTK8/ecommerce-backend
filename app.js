@@ -40,8 +40,8 @@ app.use(cors({
 }));
 
 app.use(bodyParser.json());
-app.use("/user",api/userrouter)
-app.use("/admin",api/adminrouter)
+app.use("/api/user",userrouter)
+app.use("/api/admin",adminrouter)
 
 
 
