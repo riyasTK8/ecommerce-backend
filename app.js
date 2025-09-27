@@ -26,7 +26,7 @@ app.use(session({
     secure: false   
   },
   store: MongoStore.create({
-    mongoUrl: "mongodb+srv://riyasdevxtra_db_user:jOnCAyuK5DRCToTg@myecommercebackend.dkfrttl.mongodb.net/?retryWrites=true&w=majority&appName=myecommercebackend",
+    mongoUrl: "mongodb+srv://riyasdevxtra_db_user:RIYAS@777@myecommercebackend.dkfrttl.mongodb.net/?retryWrites=true&w=majority&appName=myecommercebackend",
     collectionName: 'sessions'
   })
 }));
@@ -46,7 +46,7 @@ app.use("/api/admin",adminrouter)
 
 
 
-mongoose.connect("mongodb+srv://riyasdevxtra_db_user:jOnCAyuK5DRCToTg@myecommercebackend.dkfrttl.mongodb.net/ecommerceproject?retryWrites=true&w=majority&appName=myecommercebackend")
+mongoose.connect("mongodb+srv://riyasdevxtra_db_user:RIYAS@777@myecommercebackend.dkfrttl.mongodb.net/ecommerceproject?retryWrites=true&w=majority&appName=myecommercebackend")
     .then(() => {
         console.log('database connected successfully');   
     })
