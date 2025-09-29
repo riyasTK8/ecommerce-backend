@@ -46,7 +46,7 @@ app.use("/api/admin",adminrouter)
 
 
 
-mongoose.connect("mongodb+srv://riyasdevxtra_db_user:RIYAS@777@myecommercebackend.dkfrttl.mongodb.net/ecommerceproject?retryWrites=true&w=majority&appName=myecommercebackend")
+mongoose.connect("mongodb+srv://riyastk824_db_user:Riyas111[]@backend.r8fvchk.mongodb.net/ecommerceproject?retryWrites=true&w=majority&appName=backend")
     .then(() => {
         console.log('database connected successfully');   
     })
