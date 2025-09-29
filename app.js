@@ -26,7 +26,7 @@ app.use(session({
     secure: false   
   },
   store: MongoStore.create({
-    mongoUrl: "mongodb+srv://riyasdevxtra_db_user:RIYAS@777@myecommercebackend.dkfrttl.mongodb.net/?retryWrites=true&w=majority&appName=myecommercebackend",
+    mongoUrl: "mongodb+srv://riyastk824_db_user:Riyas111[]@backend.r8fvchk.mongodb.net/ecommerceproject?retryWrites=true&w=majority&appName=backend",
     collectionName: 'sessions'
   })
 }));
