@@ -31,7 +31,7 @@ app.use(session({
   })
 }));
 
-app.use(express.static("uploads"))
+app.use("api",express.static("uploads"))
 app.use(express.urlencoded())
 app.use(express.json())
 app.use(cors({
